@@ -1,0 +1,13 @@
+// The alerts feature's public barrel.
+export { default as alertsFeature } from './manifest.js'
+export * from './models.js'
+export * from './actions.js'
+export * from './types.js'
+export * from './config.js'
+export * from './store.js'
+export * from './evaluate.js'
+export * from './flush.js'
+export * from './deliver.js'
+export * from './transports.js'
+export * from './signals.js'
+export * from './targets.js'

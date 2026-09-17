@@ -1,0 +1,12 @@
+{
+  "apps/web": {
+    "dependencies": {
+      "@tiptap/extension-list": "^3.27.1",
+      "@tiptap/extension-table": "^3.27.1",
+      "@tiptap/extensions": "^3.27.1",
+      "@tiptap/markdown": "^3.27.1",
+      "@tiptap/react": "^3.27.1",
+      "@tiptap/starter-kit": "^3.27.1"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+// The crm feature's public barrel.
+export { default as crmFeature } from './manifest.js'
+export * from './models.js'
+export * from './types.js'
+export * from './state.js'
+export * from './meetings.js'
+export * from './revenue.js'
+export * from './docs.js'
+export * from './identity.js'
+export * from './import.js'
+export * from './activities.js'

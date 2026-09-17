@@ -1,0 +1,31 @@
+name: verify
+on:
+  push:
+    branches: [master]
+  pull_request:
+jobs:
+  pair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+          fetch-tags: true
+      # The submodule guard needs box's default branch to test ancestry against.
+      - name: Fetch box's default branch
+        run: git -C box fetch --depth=100 origin core-only
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Guard before anything else
+        run: node scripts/guard.ts
+      - run: pnpm build
+      - run: pnpm verify
+      # Every version the index advertises must be fetchable, or `box adopt` fails for a user at
+      # the clone. This is the check that only exists once the registry is published.
+      - name: Tags match the index
+        run: node scripts/registry.ts --check

@@ -1,0 +1,35 @@
+# box-apps is the pnpm workspace root; the submodule `box/` holds every package. The ten apps'
+# own npm dependencies live on THIS root's package.json (generated from features/*/deps.json by
+# scripts/deps.ts), because box/packages/core/package.json and friends are tracked files of the
+# `box` repo and box-apps must never write them.
+#
+# The toolchain is deliberately NOT duplicated here. Declaring box's root devDependencies on this
+# manifest re-resolves the tree and picked typescript@7 for @swc-node/register, which has no JS
+# API: typegen, schema:check and five server tests die with "Cannot read properties of undefined
+# (reading 'Js')". Scripts prepend box/node_modules/.bin to PATH instead.
+packages:
+  - box
+  - box/apps/*
+  - box/packages/*
+linkWorkspacePackages: true
+
+# The three blocks below MUST match box/pnpm-workspace.yaml; they apply to packages that live in
+# the submodule. scripts/compose.ts fails on drift.
+allowBuilds:
+  better-sqlite3: true
+  esbuild: true
+  '@swc/core': true
+  '@nestjs/core': false
+  '@scarf/scarf': false
+minimumReleaseAgeExclude:
+  - '@silkweave/*'
+  - '@workerdeck/*'
+  - '@anthropic-ai/claude-agent-sdk-darwin-arm64@0.3.258'
+  - '@anthropic-ai/claude-agent-sdk-darwin-x64@0.3.258'
+  - '@anthropic-ai/claude-agent-sdk-linux-arm64-musl@0.3.258'
+  - '@anthropic-ai/claude-agent-sdk-linux-arm64@0.3.258'
+  - '@anthropic-ai/claude-agent-sdk-linux-x64-musl@0.3.258'
+  - '@anthropic-ai/claude-agent-sdk-linux-x64@0.3.258'
+  - '@anthropic-ai/claude-agent-sdk-win32-arm64@0.3.258'
+  - '@anthropic-ai/claude-agent-sdk-win32-x64@0.3.258'
+  - '@anthropic-ai/claude-agent-sdk@0.3.258'

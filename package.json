@@ -1,0 +1,55 @@
+{
+  "name": "silkweave-box-apps",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@11.8.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "compose": "node scripts/compose.ts",
+    "build": "node scripts/compose.ts && PATH=\"$PWD/box/node_modules/.bin:$PATH\" pnpm -r --filter '@silkweave/box-*' run build",
+    "deps": "node scripts/deps.ts",
+    "deps:check": "node scripts/deps.ts --check",
+    "registry": "node scripts/registry.ts",
+    "registry:check": "node scripts/registry.ts --check",
+    "guard": "node scripts/guard.ts",
+    "lock:seed": "node scripts/lock-seed.ts",
+    "verify": "node scripts/verify.ts",
+    "dev": "node scripts/dev.ts",
+    "release": "node scripts/release.ts",
+    "pnpm:devPreinstall": "node scripts/compose.ts"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.6.0",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@tiptap/core": "^3.27.1",
+    "@tiptap/extension-list": "^3.27.1",
+    "@tiptap/extension-table": "^3.27.1",
+    "@tiptap/extensions": "^3.27.1",
+    "@tiptap/markdown": "^3.27.1",
+    "@tiptap/pm": "^3.27.1",
+    "@tiptap/react": "^3.27.1",
+    "@tiptap/starter-kit": "^3.27.1",
+    "@types/web-push": "^3.6.4",
+    "@workerdeck/client": "^1.1.0",
+    "@xyflow/react": "^12.11.2",
+    "better-sqlite3": "^12.4.1",
+    "cron-parser": "^5.6.1",
+    "cronstrue": "^3.24.0",
+    "playwright-core": "^1.49.0",
+    "prismjs": "^1.30.0",
+    "react-markdown": "^10.1.0",
+    "react-simple-code-editor": "^0.14.1",
+    "remark-gfm": "^4.0.1",
+    "twitter-api-v2": "^1.29.0",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/prismjs": "^1.26.6"
+  }
+}

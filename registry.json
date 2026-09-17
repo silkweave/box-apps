@@ -1,0 +1,300 @@
+{
+  "registry": 1,
+  "repo": "https://github.com/silkweave/box-apps.git",
+  "generatedAt": "2026-09-17",
+  "apps": [
+    {
+      "id": "alerts",
+      "title": "alerts",
+      "summary": "rules over the events spine, the alert ledger, delivery",
+      "version": "1.0.0",
+      "tag": "alerts-v1.0.0",
+      "core": "^1.0.0",
+      "dependsOn": [
+        "data",
+        "planning",
+        "content",
+        "engagement"
+      ],
+      "paths": {
+        "core": "packages/core/src/features/alerts",
+        "server": "apps/server/src/features/alerts",
+        "web": "apps/web/src/features/alerts",
+        "docs": "features/alerts"
+      },
+      "deps": {
+        "packages/core": {
+          "dependencies": {
+            "playwright-core": "^1.49.0"
+          }
+        }
+      }
+    },
+    {
+      "id": "automation",
+      "title": "automation",
+      "summary": "cron schedules over core's run funnel",
+      "version": "1.0.0",
+      "tag": "automation-v1.0.0",
+      "core": "^1.0.0",
+      "dependsOn": [],
+      "paths": {
+        "core": "packages/core/src/features/automation",
+        "server": "apps/server/src/features/automation",
+        "web": "apps/web/src/features/automation",
+        "docs": "features/automation"
+      },
+      "deps": {
+        "packages/core": {
+          "dependencies": {
+            "cron-parser": "^5.6.1",
+            "cronstrue": "^3.24.0"
+          }
+        }
+      }
+    },
+    {
+      "id": "chat",
+      "title": "chat",
+      "summary": "team chat, and the agent's seat in it",
+      "version": "1.0.0",
+      "tag": "chat-v1.0.0",
+      "core": "^1.0.0",
+      "dependsOn": [],
+      "paths": {
+        "core": "packages/core/src/features/chat",
+        "server": "apps/server/src/features/chat",
+        "web": "apps/web/src/features/chat",
+        "docs": "features/chat"
+      },
+      "deps": {
+        "packages/core": {
+          "dependencies": {
+            "better-sqlite3": "^12.4.1"
+          },
+          "devDependencies": {
+            "@types/better-sqlite3": "^7.6.13"
+          }
+        },
+        "apps/server": {
+          "dependencies": {
+            "@workerdeck/client": "^1.1.0"
+          }
+        },
+        "apps/web": {
+          "dependencies": {
+            "@tiptap/core": "^3.27.1",
+            "@tiptap/extensions": "^3.27.1",
+            "@tiptap/markdown": "^3.27.1",
+            "@tiptap/pm": "^3.27.1",
+            "@tiptap/react": "^3.27.1",
+            "@tiptap/starter-kit": "^3.27.1",
+            "react-markdown": "^10.1.0",
+            "remark-gfm": "^4.0.1"
+          }
+        }
+      }
+    },
+    {
+      "id": "content",
+      "title": "content",
+      "summary": "topics, pieces, and gated publishing",
+      "version": "1.0.0",
+      "tag": "content-v1.0.0",
+      "core": "^1.0.0",
+      "dependsOn": [
+        "data",
+        "planning"
+      ],
+      "paths": {
+        "core": "packages/core/src/features/content",
+        "server": "apps/server/src/features/content",
+        "web": "apps/web/src/features/content",
+        "docs": "features/content"
+      },
+      "deps": {
+        "apps/web": {
+          "dependencies": {
+            "@tiptap/core": "^3.27.1",
+            "@tiptap/extension-list": "^3.27.1",
+            "@tiptap/extension-table": "^3.27.1",
+            "@tiptap/markdown": "^3.27.1",
+            "@tiptap/pm": "^3.27.1",
+            "@tiptap/react": "^3.27.1",
+            "@tiptap/starter-kit": "^3.27.1"
+          }
+        }
+      }
+    },
+    {
+      "id": "crm",
+      "title": "crm",
+      "summary": "accounts, contacts, meetings, revenue, activities",
+      "version": "1.0.0",
+      "tag": "crm-v1.0.0",
+      "core": "^1.0.0",
+      "dependsOn": [
+        "data"
+      ],
+      "paths": {
+        "core": "packages/core/src/features/crm",
+        "server": "apps/server/src/features/crm",
+        "web": "apps/web/src/features/crm",
+        "docs": "features/crm"
+      },
+      "deps": {
+        "apps/web": {
+          "dependencies": {
+            "@tiptap/extension-list": "^3.27.1",
+            "@tiptap/extension-table": "^3.27.1",
+            "@tiptap/extensions": "^3.27.1",
+            "@tiptap/markdown": "^3.27.1",
+            "@tiptap/react": "^3.27.1",
+            "@tiptap/starter-kit": "^3.27.1"
+          }
+        }
+      }
+    },
+    {
+      "id": "data",
+      "title": "data",
+      "summary": "signals, their sources and pulls, circuit boards, presets",
+      "version": "1.0.0",
+      "tag": "data-v1.0.0",
+      "core": "^1.0.0",
+      "dependsOn": [],
+      "paths": {
+        "core": "packages/core/src/features/data",
+        "server": "apps/server/src/features/data",
+        "web": "apps/web/src/features/data",
+        "docs": "features/data"
+      },
+      "deps": {
+        "packages/core": {
+          "dependencies": {
+            "playwright-core": "^1.49.0",
+            "twitter-api-v2": "^1.29.0"
+          }
+        },
+        "apps/web": {
+          "dependencies": {
+            "@base-ui/react": "^1.6.0",
+            "@dnd-kit/core": "^6.3.1",
+            "@dnd-kit/sortable": "^10.0.0",
+            "@dnd-kit/utilities": "^3.2.2",
+            "@xyflow/react": "^12.11.2"
+          }
+        }
+      }
+    },
+    {
+      "id": "engagement",
+      "title": "engagement",
+      "summary": "pods, the tactical inbox, engagement verification",
+      "version": "1.0.0",
+      "tag": "engagement-v1.0.0",
+      "core": "^1.0.0",
+      "dependsOn": [
+        "data",
+        "content"
+      ],
+      "paths": {
+        "core": "packages/core/src/features/engagement",
+        "server": "apps/server/src/features/engagement",
+        "web": "apps/web/src/features/engagement",
+        "docs": "features/engagement"
+      },
+      "deps": {
+        "packages/core": {
+          "dependencies": {
+            "playwright-core": "^1.49.0"
+          }
+        }
+      }
+    },
+    {
+      "id": "notifications",
+      "title": "notifications",
+      "summary": "the bell, push, and alerts into chat",
+      "version": "1.0.0",
+      "tag": "notifications-v1.0.0",
+      "core": "^1.0.0",
+      "dependsOn": [
+        "chat",
+        "alerts"
+      ],
+      "paths": {
+        "core": "packages/core/src/features/notifications",
+        "server": "apps/server/src/features/notifications",
+        "web": "apps/web/src/features/notifications",
+        "docs": "features/notifications"
+      },
+      "deps": {
+        "apps/server": {
+          "dependencies": {
+            "@types/web-push": "^3.6.4",
+            "web-push": "^3.6.7"
+          }
+        }
+      }
+    },
+    {
+      "id": "planning",
+      "title": "planning",
+      "summary": "initiatives, tasks and sprints",
+      "version": "1.0.0",
+      "tag": "planning-v1.0.0",
+      "core": "^1.0.0",
+      "dependsOn": [
+        "data"
+      ],
+      "paths": {
+        "core": "packages/core/src/features/planning",
+        "server": "apps/server/src/features/planning",
+        "web": "apps/web/src/features/planning",
+        "docs": "features/planning"
+      },
+      "deps": {
+        "apps/web": {
+          "dependencies": {
+            "@base-ui/react": "^1.6.0",
+            "@dnd-kit/core": "^6.3.1",
+            "@dnd-kit/sortable": "^10.0.0",
+            "@dnd-kit/utilities": "^3.2.2",
+            "prismjs": "^1.30.0",
+            "react-simple-code-editor": "^0.14.1"
+          },
+          "devDependencies": {
+            "@types/prismjs": "^1.26.6"
+          }
+        }
+      }
+    },
+    {
+      "id": "sink",
+      "title": "sink",
+      "summary": "the inbox of markdown notes",
+      "version": "1.0.0",
+      "tag": "sink-v1.0.0",
+      "core": "^1.0.0",
+      "dependsOn": [],
+      "paths": {
+        "core": "packages/core/src/features/sink",
+        "server": "apps/server/src/features/sink",
+        "web": "apps/web/src/features/sink",
+        "docs": "features/sink"
+      },
+      "deps": {
+        "apps/web": {
+          "dependencies": {
+            "@tiptap/extension-list": "^3.27.1",
+            "@tiptap/extension-table": "^3.27.1",
+            "@tiptap/markdown": "^3.27.1",
+            "@tiptap/react": "^3.27.1",
+            "@tiptap/starter-kit": "^3.27.1"
+          }
+        }
+      }
+    }
+  ]
+}

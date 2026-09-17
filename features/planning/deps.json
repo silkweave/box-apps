@@ -1,0 +1,15 @@
+{
+  "apps/web": {
+    "dependencies": {
+      "@base-ui/react": "^1.6.0",
+      "@dnd-kit/core": "^6.3.1",
+      "@dnd-kit/sortable": "^10.0.0",
+      "@dnd-kit/utilities": "^3.2.2",
+      "prismjs": "^1.30.0",
+      "react-simple-code-editor": "^0.14.1"
+    },
+    "devDependencies": {
+      "@types/prismjs": "^1.26.6"
+    }
+  }
+}

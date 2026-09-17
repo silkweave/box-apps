@@ -1,0 +1,5 @@
+# Keep rg and agent search off the mirror inside the submodule; the truth is at the root.
+box/packages/core/src/features/
+box/apps/server/src/features/
+box/apps/web/src/features/
+box/features/

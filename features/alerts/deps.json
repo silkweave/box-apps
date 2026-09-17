@@ -1,0 +1,7 @@
+{
+  "packages/core": {
+    "dependencies": {
+      "playwright-core": "^1.49.0"
+    }
+  }
+}
