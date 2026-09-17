@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 // `pnpm verify` for the PAIR. box proves core-only; this proves core plus the ten apps.
 //
-// It is box's chain with two steps replaced and four added, and it deliberately does not shell out
+// It is box's chain with one step replaced and five added, and it deliberately does not shell out
 // to box's own `pnpm verify`: two of box's steps cannot pass here by design.
-//   - `registry:check` compares against box/registry.json, which is an empty index.
+//   - box no longer has a `registry:check` at all: a Box reads an index and never publishes one,
+//     so generating and checking it is this repo's job (scripts/registry.ts, using box's buildIndex).
 //   - `deps:check` rule 1 wants each app's specs in box/<tree>/package.json, where box-apps must
 //     never write them; it reports 52 failures. scripts/deps.ts checks the same property against
 //     the place the specs actually live, and adds the rule box cannot see (rule 3').
@@ -24,7 +25,7 @@ import { box, compose, root } from './compose.ts'
  * is how the second gate quietly stops proving anything.
  */
 const BOX_VERIFY =
-  'pnpm features && pnpm skills && pnpm registry:check && pnpm docs:check && pnpm test:cli && pnpm lint:deps && pnpm deps:check && pnpm typegen && pnpm typecheck && pnpm lint && pnpm -F @silkweave/box-core test && pnpm -F @silkweave/box-server test'
+  'pnpm features && pnpm skills && pnpm docs:check && pnpm test:cli && pnpm lint:deps && pnpm deps:check && pnpm typegen && pnpm typecheck && pnpm lint && pnpm -F @silkweave/box-core test && pnpm -F @silkweave/box-server test'
 
 const bin = join(box, 'node_modules', '.bin')
 const env = { ...process.env, PATH: `${bin}:${process.env.PATH ?? ''}` }
