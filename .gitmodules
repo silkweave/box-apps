@@ -1,4 +1,4 @@
 [submodule "box"]
 	path = box
 	url = https://github.com/silkweave/box.git
-	branch = core-only
+	branch = master

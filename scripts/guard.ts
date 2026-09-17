@@ -13,10 +13,10 @@ import { fileURLToPath } from 'node:url'
 import { box, root } from './compose.ts'
 
 /**
- * box's default branch. It is `core-only` until Session 6 promotes that line onto `master`; this
- * constant and .gitmodules' `branch =` are the two places that have to move together.
+ * box's default branch. This constant, `.gitmodules`' `branch =` and the fetch step in
+ * .github/workflows/verify.yml are the three places that name it, and they move together.
  */
-export const BOX_DEFAULT_BRANCH = 'core-only'
+export const BOX_DEFAULT_BRANCH = 'master'
 
 const git = (args: string[], cwd: string) => execFileSync('git', args, { cwd, encoding: 'utf8' }).trim()
 const tryGit = (args: string[], cwd: string) => { try { return git(args, cwd) } catch { return null } }

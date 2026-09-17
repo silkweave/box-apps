@@ -14,7 +14,7 @@ jobs:
           fetch-tags: true
       # The submodule guard needs box's default branch to test ancestry against.
       - name: Fetch box's default branch
-        run: git -C box fetch --depth=100 origin core-only
+        run: git -C box fetch --depth=100 origin master
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
