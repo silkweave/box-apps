@@ -83,6 +83,11 @@ Core is canonical in `box`. Sync is **one direction only**. Nothing here ever wr
 
 ## Checks
 
+CI (`.github/workflows/verify.yml`) is **parked** as of 2026-09-18: this repo is public, its
+submodule points at a private `silkweave/box`, and `actions/checkout` cannot clone what it may not
+see. Restore its `push` and `pull_request` triggers the day box is published. Until then `pnpm
+verify` on a maintainer's machine is the only gate the pair has.
+
 `pnpm install && pnpm build && pnpm verify`. The build is required before verify, exactly as in
 box: tests resolve core and provider-kit through `build/`.
 

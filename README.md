@@ -3,6 +3,10 @@
 The reference apps for [Silkweave Box](https://github.com/silkweave/box), and the registry index
 that `box adopt` reads.
 
+> **The foundation repo is not public yet** (2026-09-18). Until it is, `silkweave/box` cannot be
+> cloned, so neither `box adopt` nor this repo's own submodule works for anyone outside the
+> maintainer account, and CI here is parked for that one reason.
+
 **If you want an app, you do not need this repository.** From your own Box:
 
 ```bash

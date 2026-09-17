@@ -1,8 +1,15 @@
 name: verify
+# PARKED until silkweave/box is public. This repo is public and its submodule points at a PRIVATE
+# repo, so `actions/checkout` with submodules fails before any step of the pair runs:
+#   fatal: repository 'https://github.com/silkweave/box.git/' not found
+# Nothing here is wrong; it cannot clone what it is not allowed to see. When box is published,
+# restore the two triggers below and delete this block. Until then it can be run by hand from the
+# Actions tab, where it will fail for that one reason.
 on:
-  push:
-    branches: [master]
-  pull_request:
+  workflow_dispatch:
+  # push:
+  #   branches: [master]
+  # pull_request:
 jobs:
   pair:
     runs-on: ubuntu-latest
