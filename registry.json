@@ -1,7 +1,7 @@
 {
   "registry": 1,
   "repo": "https://github.com/silkweave/box-apps.git",
-  "generatedAt": "2026-09-17",
+  "generatedAt": "2026-09-18",
   "apps": [
     {
       "id": "alerts",
@@ -269,6 +269,22 @@
           }
         }
       }
+    },
+    {
+      "id": "reminders",
+      "title": "reminders",
+      "summary": "a date/time, a name, an optional description",
+      "version": "1.0.0",
+      "tag": "reminders-v1.0.0",
+      "core": "^1.0.0",
+      "dependsOn": [],
+      "paths": {
+        "core": "packages/core/src/features/reminders",
+        "server": "apps/server/src/features/reminders",
+        "web": "apps/web/src/features/reminders",
+        "docs": "features/reminders"
+      },
+      "deps": {}
     },
     {
       "id": "sink",
