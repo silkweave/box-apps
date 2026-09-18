@@ -1,5 +1,5 @@
-// Which blog feed a Box pulls. `blogFeed()` reads config/accounts.json, so every test here points
-// BOX_DATA_DIR at a temp dir; "a Box with no accounts.json" is the state every fresh Box starts in
+// Which blog feed a Box pulls. `blogFeed()` reads config/accounts.json, so every test here points the
+// instance dir at a temp one; "a Box with no accounts.json" is the state every fresh Box starts in
 // and is the one this file most needs to pin down, because the bug it replaces was a constant that
 // made every Box pull the author's feed with no override path at all.
 
@@ -8,10 +8,10 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { BLOG_NOT_CONFIGURED, blogFeed } from './blog-feed.js'
+import { setInstanceDir, resetInstanceDir } from '../../testing.js'
 
 describe('blogFeed', () => {
   let dir: string
-  const prev = process.env.BOX_DATA_DIR
 
   const writeAccounts = (body: unknown): void =>
     writeFileSync(join(dir, 'config', 'accounts.json'), JSON.stringify(body), 'utf8')
@@ -19,11 +19,10 @@ describe('blogFeed', () => {
   beforeEach(() => {
     dir = mkdtempSync(join(tmpdir(), 'box-blog-feed-'))
     mkdirSync(join(dir, 'config'), { recursive: true })
-    process.env.BOX_DATA_DIR = dir
+    setInstanceDir(dir)
   })
   afterEach(() => {
-    if (prev === undefined) delete process.env.BOX_DATA_DIR
-    else process.env.BOX_DATA_DIR = prev
+    resetInstanceDir()
   })
 
   it('is null when there is no accounts.json at all - the state every fresh Box is in', () => {

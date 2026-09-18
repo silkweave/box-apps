@@ -10,12 +10,13 @@ import { join } from 'node:path'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { upsertImportedAccount, upsertImportedContact } from './import.js'
 import { findAccountForImport, upsertCrmAccount, upsertCrmContact } from './state.js'
+import { setInstanceDir, resetInstanceDir } from '../../testing.js'
 
 let dir: string
 
 beforeAll(async () => {
   dir = mkdtempSync(join(tmpdir(), 'box-crm-match-'))
-  process.env.BOX_DATA_DIR = dir
+  setInstanceDir(dir)
 
   // An account somebody created by hand, with a legal suffix on the name.
   await upsertCrmAccount({ id: 'northwind', name: 'Northwind Pte Ltd.', website: 'https://www.northwind.io' })
@@ -39,7 +40,7 @@ beforeAll(async () => {
 })
 
 afterAll(() => {
-  delete process.env.BOX_DATA_DIR
+  resetInstanceDir()
   rmSync(dir, { recursive: true, force: true })
 })
 

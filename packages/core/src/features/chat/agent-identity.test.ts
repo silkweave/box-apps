@@ -8,13 +8,13 @@ import { agentRoomOf } from './agent-session-access.js'
 import { chatOpNeedsApproval } from './chat-op-approvals.js'
 import { ChatStore } from './store.js'
 import type { ChatMessage } from './types.js'
+import { setInstanceDir, resetInstanceDir } from '../../testing.js'
 
 test('a custom configured identity drives mentions, DM guests, prompts, sessions and approvals', () => {
   const parent = join(repoRoot(), 'node_modules', '.cache')
   mkdirSync(parent, { recursive: true })
   const dir = mkdtempSync(join(parent, 'chat-identity-'))
-  const before = process.env.BOX_DATA_DIR
-  process.env.BOX_DATA_DIR = dir
+  setInstanceDir(dir)
   mkdirSync(join(dir, 'config'))
   writeFileSync(join(dir, 'config', 'box.json'), JSON.stringify({ agent: { id: 'orion', name: 'Orion Guide', role: 'member' } }))
   const store = new ChatStore(join(dir, 'chat.db'))
@@ -39,8 +39,7 @@ test('a custom configured identity drives mentions, DM guests, prompts, sessions
     expect(store.canReadRoom(privateRoom.id, 'nova')).toBe(false)
   } finally {
     store.close()
-    if (before === undefined) delete process.env.BOX_DATA_DIR
-    else process.env.BOX_DATA_DIR = before
+    resetInstanceDir()
     rmSync(dir, { recursive: true, force: true })
   }
 })

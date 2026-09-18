@@ -17,18 +17,19 @@ import {
 } from './revenue.js'
 import { upsertCrmAccount } from './state.js'
 import type { CrmImportedRevenueEventInput } from './types.js'
+import { setInstanceDir, resetInstanceDir } from '../../testing.js'
 
 let dir: string
 
 beforeAll(async () => {
   dir = mkdtempSync(join(tmpdir(), 'box-crm-revenue-import-'))
-  process.env.BOX_DATA_DIR = dir
+  setInstanceDir(dir)
   await upsertCrmAccount({ id: 'crestline', name: 'Crestline' })
   await upsertCrmAccount({ id: 'larkfield', name: 'Larkfield' })
 })
 
 afterAll(() => {
-  delete process.env.BOX_DATA_DIR
+  resetInstanceDir()
   rmSync(dir, { recursive: true, force: true })
 })
 

@@ -22,12 +22,13 @@ import {
   upsertTask,
 } from './state.js'
 import { upsertUser } from '../../users/state.js'
+import { setInstanceDir, resetInstanceDir } from '../../testing.js'
 
 let dir: string
 
 beforeAll(async () => {
   dir = mkdtempSync(join(tmpdir(), 'box-sprint-tasks-'))
-  process.env.BOX_DATA_DIR = dir
+  setInstanceDir(dir)
   await upsertUser({ id: 'sam', first_name: 'Sam', last_name: 'Rivera' })
   await upsertUser({ id: 'kit', first_name: 'Kit', last_name: 'Moore' })
   await upsertInitiative({ id: 'platform', title: 'Platform' })
@@ -35,7 +36,7 @@ beforeAll(async () => {
 })
 
 afterAll(() => {
-  delete process.env.BOX_DATA_DIR
+  resetInstanceDir()
   rmSync(dir, { recursive: true, force: true })
 })
 

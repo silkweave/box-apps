@@ -12,16 +12,17 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { readCrmAccount, upsertCrmAccount } from './state.js'
+import { setInstanceDir, resetInstanceDir } from '../../testing.js'
 
 let dir: string
 
 beforeAll(async () => {
   dir = mkdtempSync(join(tmpdir(), 'box-crm-accounts-'))
-  process.env.BOX_DATA_DIR = dir
+  setInstanceDir(dir)
 })
 
 afterAll(() => {
-  delete process.env.BOX_DATA_DIR
+  resetInstanceDir()
   rmSync(dir, { recursive: true, force: true })
 })
 

@@ -1,5 +1,5 @@
 // The npm package list's parser. Everything here drives `parseNpmPackages` directly (it is pure);
-// the one test that touches disk points BOX_DATA_DIR at a temp dir, because "a Box with no
+// the one test that touches disk points the instance dir at a temp one, because "a Box with no
 // npm-packages.json" is the state every fresh Box starts in and is the one this file most needs to
 // pin down.
 
@@ -8,6 +8,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { allNpmPackages, parseNpmPackages, readNpmPackages } from './npm-packages.js'
+import { setInstanceDir, resetInstanceDir } from '../../testing.js'
 
 describe('parseNpmPackages', () => {
   it('reads the two declared lists, preserving file order', () => {
@@ -57,16 +58,14 @@ describe('parseNpmPackages', () => {
 
 describe('readNpmPackages', () => {
   let dir: string
-  const prev = process.env.BOX_DATA_DIR
 
   beforeEach(() => {
     dir = mkdtempSync(join(tmpdir(), 'box-npm-packages-'))
     mkdirSync(join(dir, 'config'), { recursive: true })
-    process.env.BOX_DATA_DIR = dir
+    setInstanceDir(dir)
   })
   afterEach(() => {
-    if (prev === undefined) delete process.env.BOX_DATA_DIR
-    else process.env.BOX_DATA_DIR = prev
+    resetInstanceDir()
   })
 
   it('returns empty lists when the file does not exist - the state every fresh Box is in', () => {

@@ -10,12 +10,13 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { deleteCrmActivity, logCrmActivity, readCrmActivities, upsertCrmActivity } from './activities.js'
 import { deleteCrmAccount, deleteCrmContact, upsertCrmAccount, upsertCrmContact } from './state.js'
 import { upsertUser } from '../../users/state.js'
+import { setInstanceDir, resetInstanceDir } from '../../testing.js'
 
 let dir: string
 
 beforeAll(async () => {
   dir = mkdtempSync(join(tmpdir(), 'box-crm-act-'))
-  process.env.BOX_DATA_DIR = dir
+  setInstanceDir(dir)
   // `actor` is validated by the record layer, so a throwaway warehouse needs the person to exist.
   await upsertUser({ id: 'sam', first_name: 'Sam', last_name: 'Rivera' })
   await upsertCrmAccount({ id: 'acme', name: 'Acme' })
@@ -34,7 +35,7 @@ beforeAll(async () => {
 })
 
 afterAll(() => {
-  delete process.env.BOX_DATA_DIR
+  resetInstanceDir()
   rmSync(dir, { recursive: true, force: true })
 })
 

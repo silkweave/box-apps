@@ -10,12 +10,13 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { readCrmMeeting, readCrmMeetingQueue, upsertCrmMeeting, upsertImportedMeeting } from './meetings.js'
 import { upsertCrmAccount, upsertCrmContact } from './state.js'
 import type { CrmImportedMeetingInput, CrmMeetingOutcome } from './types.js'
+import { setInstanceDir, resetInstanceDir } from '../../testing.js'
 
 let dir: string
 
 beforeAll(async () => {
   dir = mkdtempSync(join(tmpdir(), 'box-crm-meetings-import-'))
-  process.env.BOX_DATA_DIR = dir
+  setInstanceDir(dir)
   await upsertCrmAccount({ id: 'acme', name: 'Acme' })
   await upsertCrmAccount({ id: 'globex', name: 'Globex' })
   await upsertCrmContact({ id: 'jane', account_id: 'acme', name: 'Jane', email: 'jane@acme.com' })
@@ -23,7 +24,7 @@ beforeAll(async () => {
 })
 
 afterAll(() => {
-  delete process.env.BOX_DATA_DIR
+  resetInstanceDir()
   rmSync(dir, { recursive: true, force: true })
 })
 

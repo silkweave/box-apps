@@ -1,5 +1,5 @@
 // The topic radar's listening list. Everything here drives `parseRedditRadar` directly (it is
-// pure); the tests that touch disk point BOX_DATA_DIR at a temp dir, because "a Box with no
+// pure); the tests that touch disk point the instance dir at a temp one, because "a Box with no
 // reddit-radar.json" is the state every fresh Box starts in and is the one this file most needs to
 // pin down. The snapshot test at the bottom pins the OTHER half of the fix: a stored scan carries
 // the subs and topics that produced it.
@@ -9,6 +9,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { parseRedditRadar, readRedditRadar, redditRadarConfigured } from './reddit-radar.js'
+import { setInstanceDir, resetInstanceDir } from '../../testing.js'
 
 describe('parseRedditRadar', () => {
   it('reads both declared lists, preserving file order', () => {
@@ -68,16 +69,14 @@ describe('redditRadarConfigured', () => {
 
 describe('readRedditRadar', () => {
   let dir: string
-  const prev = process.env.BOX_DATA_DIR
 
   beforeEach(() => {
     dir = mkdtempSync(join(tmpdir(), 'box-reddit-radar-'))
     mkdirSync(join(dir, 'config'), { recursive: true })
-    process.env.BOX_DATA_DIR = dir
+    setInstanceDir(dir)
   })
   afterEach(() => {
-    if (prev === undefined) delete process.env.BOX_DATA_DIR
-    else process.env.BOX_DATA_DIR = prev
+    resetInstanceDir()
   })
 
   it('returns empty lists when the file does not exist - the state every fresh Box is in', () => {
