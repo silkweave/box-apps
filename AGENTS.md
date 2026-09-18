@@ -75,8 +75,14 @@ Core is canonical in `box`. Sync is **one direction only**. Nothing here ever wr
   `install`; it would find a second workspace root and build a second store. `compose` hides
   `box/pnpm-workspace.yaml` and `box/pnpm-lock.yaml` with sparse-checkout to make that impossible,
   and refuses to run if `box/node_modules/.pnpm` already exists. `node` is safe there.
-- **Do not `pnpm box:install` from this checkout.** The `box` shim would resolve this root as the
-  Box. Use the root's delegating scripts instead.
+- **Do not `pnpm box:install` from this checkout; use `pnpm box <verb>`.** This root is not a Box -
+  its `apps/server/` and `packages/core/` hold the published apps' SOURCE, with no package of their
+  own - and core's `isBoxRoot` has said so since 2026-09-18, so `box` correctly finds no Box above
+  you here. It then falls back to whichever checkout registered `~/.local/bin/box`, which is some
+  other Box. `pnpm box` (`scripts/box.ts`) removes the ambiguity: a pass-through that runs the
+  SUBMODULE's CLI with the submodule as cwd, so the target is never in question.
+  `pnpm box auth reveal <id>`, `pnpm box db backup`, `pnpm box <tool-name>`, `pnpm box where`.
+  `adopt` is refused on purpose - this repo publishes apps, it never adopts them.
 - An app's core range in `features/<id>/app.json` is a promise to users: tighten it to what the app
   actually supports, and remember core takes a MAJOR for a breaking change with no downstream fix.
 - Never use em-dashes (U+2014). Use absolute dates such as `2026-09-17`.
@@ -103,3 +109,25 @@ lockfile pins.
 
 Turbo is deliberately unused here: its hashing is git-based and cannot see the mirrored files, so a
 cache hit would be a false green.
+
+## Wrapup Config
+
+- check: `pnpm build && pnpm verify` (tests included; the build is required before verify).
+- test: included in `pnpm verify`.
+- frontend_smoke: `pnpm dev`, then load the changed app's route on `http://localhost:8190` and read
+  the console. `pnpm verify` has no runtime step and cannot see a module-scope read of a web
+  registry, a boot-time registration or a route collision (SEAM 6.3).
+- push: yes. Push `box` FIRST whenever the pin moved: `push.recurseSubmodules=check` refuses a
+  pointer the remote does not have. Check the submodule's local branch is not BEHIND its remote
+  before committing there, or the work lands on a stale base.
+- version_bump: per APP, never repo-wide. `pnpm release <id> <version>` bumps
+  `features/<id>/app.json`, requires a matching `## <version>` section in that app's CHANGELOG,
+  regenerates `registry.json`, commits and writes the annotated tag `<id>-v<version>`; then
+  `git push origin master <id>-v<version>`. **Never move a published tag** - cut the next version.
+- publish: no npm packages. Publishing an app IS its tag plus the regenerated `registry.json`.
+- changelog: per app, `features/<id>/CHANGELOG.md`, newest first, one `## <version>` section per
+  release. It is how a later version reaches a Box that already adopted the app - there is no update
+  command - so write it for the team's agent applying it against code they have customised.
+- docs: an app's `SPEC.md` (what it is) and `AGENT.md` (the recipe), updated with the app itself.
+  This root's AGENTS.md carries the repo's own rules; core's docs live in `box/`, not here.
+- co_authored_by: no (global)

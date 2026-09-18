@@ -17,6 +17,7 @@
     "guard": "node scripts/guard.ts",
     "lock:seed": "node scripts/lock-seed.ts",
     "verify": "node scripts/verify.ts",
+    "box": "node scripts/box.ts",
     "dev": "node scripts/dev.ts",
     "release": "node scripts/release.ts",
     "pnpm:devPreinstall": "node scripts/compose.ts"
